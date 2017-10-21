@@ -12,12 +12,10 @@ parsed_brands = json.loads(brands_string)
 
 count = 0
 
-i = 0
-for unsorted_brand in parsed_brands:
+for index, unsorted_brand in enumerate(parsed_brands):
     if unsorted_brand['name'] == '2 Sisters':
         print("2 Sisters was at index {} before sorting".format(index))
         break
-    i += 1
 
 while count < len(parsed_brands):
     for index, brand in enumerate(parsed_brands):
@@ -29,11 +27,10 @@ while count < len(parsed_brands):
 
         count += 1
 
-for sorted_brand in parsed_brands:
+for index, sorted_brand in enumerate(parsed_brands):
     if sorted_brand['name'] == '2 Sisters':
         print("2 Sisters was at index {} after sorting".format(index))
         break
-    i += 1
 
 """
 Finally, implement and return a list of all individual books, sorted by `release_date`.
