@@ -6,19 +6,30 @@ it's both sane and maintainable.
 """
 
 def parse_brands(filename):
+    """Parses in a list of brands from a json file"""
     with open(filename, 'r') as infile:
         return json.loads(infile.read())
+
+def find_brand_by_name(brands, name):
+    """
+    Loops through a list of brands to find the index of the brand
+    who's name matches the name parameter
+    """
+    for index, brand in enumerate(brands):
+        if brand['name'] == name:
+            return index
+    
+def print_brand_position(brands, name, when):
+    """Finds and prints the index of a brand in the list of brands by name """
+    index = find_brand_by_name(brands, name)
+    print("{0} was at index {1} {2} sorting".format(name, index, when))
 
 
 parsed_brands = parse_brands('brands.json')
 
+print_brand_position(parsed_brands, name='2 Sisters', when='before')
+
 count = 0
-
-for index, unsorted_brand in enumerate(parsed_brands):
-    if unsorted_brand['name'] == '2 Sisters':
-        print("2 Sisters was at index {} before sorting".format(index))
-        break
-
 while count < len(parsed_brands):
     for index, brand in enumerate(parsed_brands):
         if index < len(parsed_brands) - 1:
@@ -29,10 +40,7 @@ while count < len(parsed_brands):
 
         count += 1
 
-for index, sorted_brand in enumerate(parsed_brands):
-    if sorted_brand['name'] == '2 Sisters':
-        print("2 Sisters was at index {} after sorting".format(index))
-        break
+print_brand_position(parsed_brands, name='2 Sisters', when='after')
 
 """
 Finally, implement and return a list of all individual books, sorted by `release_date`.
