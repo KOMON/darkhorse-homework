@@ -24,18 +24,12 @@ def print_brand_position(brands, name, when):
     index = find_brand_by_name(brands, name)
     print("{0} was at index {1} {2} sorting".format(name, index, when))
 
-
+                
 brands = parse_brands('brands.json')
 
 print_brand_position(brands, name='2 Sisters', when='before')
 
-unsorted = True
-while unsorted:
-    for i in range(len(brands) - 1):
-        unsorted = False
-        if brands[i]['uuid'] > brands[i+1]['uuid']:
-            unsorted = True
-            brands[i+1], brands[i] = brands[i], brands[i+1]
+brands.sort(key=lambda brand: brand['uuid'])
 
 print_brand_position(brands, name='2 Sisters', when='after')
 
