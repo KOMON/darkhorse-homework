@@ -29,16 +29,13 @@ brands = parse_brands('brands.json')
 
 print_brand_position(brands, name='2 Sisters', when='before')
 
-count = 0
-while count < len(brands):
-    for index, brand in enumerate(brands):
-        if index < len(brands) - 1:
-            if brands[index]['uuid'] > brands[index+1]['uuid']:
-                temp = brands[index+1]
-                brands[index+1] = brands[index]
-                brands[index] = temp
-
-        count += 1
+unsorted = True
+while unsorted:
+    for i in range(len(brands) - 1):
+        unsorted = False
+        if brands[i]['uuid'] > brands[i+1]['uuid']:
+            unsorted = True
+            brands[i+1], brands[i] = brands[i], brands[i+1]
 
 print_brand_position(brands, name='2 Sisters', when='after')
 
