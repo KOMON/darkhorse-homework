@@ -18,29 +18,29 @@ def find_brand_by_name(brands, name):
     for index, brand in enumerate(brands):
         if brand['name'] == name:
             return index
-    
+        
 def print_brand_position(brands, name, when):
     """Finds and prints the index of a brand in the list of brands by name """
     index = find_brand_by_name(brands, name)
     print("{0} was at index {1} {2} sorting".format(name, index, when))
 
 
-parsed_brands = parse_brands('brands.json')
+brands = parse_brands('brands.json')
 
-print_brand_position(parsed_brands, name='2 Sisters', when='before')
+print_brand_position(brands, name='2 Sisters', when='before')
 
 count = 0
-while count < len(parsed_brands):
-    for index, brand in enumerate(parsed_brands):
-        if index < len(parsed_brands) - 1:
-            if parsed_brands[index]['uuid'] > parsed_brands[index+1]['uuid']:
-                temp = parsed_brands[index+1]
-                parsed_brands[index+1] = parsed_brands[index]
-                parsed_brands[index] = temp
+while count < len(brands):
+    for index, brand in enumerate(brands):
+        if index < len(brands) - 1:
+            if brands[index]['uuid'] > brands[index+1]['uuid']:
+                temp = brands[index+1]
+                brands[index+1] = brands[index]
+                brands[index] = temp
 
         count += 1
 
-print_brand_position(parsed_brands, name='2 Sisters', when='after')
+print_brand_position(brands, name='2 Sisters', when='after')
 
 """
 Finally, implement and return a list of all individual books, sorted by `release_date`.
