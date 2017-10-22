@@ -20,11 +20,16 @@ def find_brand_by_name(brands, name):
             return index
         
 def print_brand_position(brands, name, when):
-    """Finds and prints the index of a brand in the list of brands by name """
+    """Finds and prints the index of a brand in the list of brands by name"""
     index = find_brand_by_name(brands, name)
     print("{0} was at index {1} {2} sorting".format(name, index, when))
 
-                
+def get_books_from_brands(brands):
+      return [book for brand in brands
+              for series in brand['series']
+              for volume in series['volumes']
+              for book in volume['books']]
+
 brands = parse_brands('brands.json')
 
 print_brand_position(brands, name='2 Sisters', when='before')
@@ -36,3 +41,9 @@ print_brand_position(brands, name='2 Sisters', when='after')
 """
 Finally, implement and return a list of all individual books, sorted by `release_date`.
 """
+
+books = get_books_from_brands(brands)
+books.sort(key=lambda b: b['release_date'])
+
+for book in books:
+    print("{0} was released {1}".format(book['title'], book['release_date']))
