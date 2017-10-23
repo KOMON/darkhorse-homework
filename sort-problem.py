@@ -1,5 +1,7 @@
 import json
 
+from models import BrandDecoder
+
 """
 This search gives us the index of the desired element, but it's a mess. Fix and optimize it so that
 it's both sane and maintainable.
@@ -8,15 +10,15 @@ it's both sane and maintainable.
 def parse_brands(filename):
     """Parses in a list of brands from a json file"""
     with open(filename, 'r') as infile:
-        return json.loads(infile.read())
+        return json.loads(infile.read(), cls=BrandDecoder)
 
 def find_brand_by_name(brands, name):
     """
     Loops through a list of brands to find the index of the brand
-    who's name matches the name parameter
+    whose name matches the name parameter
     """
     for index, brand in enumerate(brands):
-        if brand['name'] == name:
+        if brand.name == name:
             return index
         
 def print_brand_position(brands, name, when):
@@ -24,17 +26,11 @@ def print_brand_position(brands, name, when):
     index = find_brand_by_name(brands, name)
     print("{0} was at index {1} {2} sorting".format(name, index, when))
 
-def get_books_from_brands(brands):
-      return [book for brand in brands
-              for series in brand['series']
-              for volume in series['volumes']
-              for book in volume['books']]
-
 brands = parse_brands('brands.json')
 
 print_brand_position(brands, name='2 Sisters', when='before')
 
-brands.sort(key=lambda brand: brand['uuid'])
+brands.sort(key=lambda brand: brand.uuid)
 
 print_brand_position(brands, name='2 Sisters', when='after')
 
@@ -42,8 +38,8 @@ print_brand_position(brands, name='2 Sisters', when='after')
 Finally, implement and return a list of all individual books, sorted by `release_date`.
 """
 
-books = get_books_from_brands(brands)
-books.sort(key=lambda b: b['release_date'])
+books = [book for brand in brands for book in brand.books]
+books.sort(key=lambda book: book.release_date)
 
 for book in books:
-    print("{0} was released {1}".format(book['title'], book['release_date']))
+    print("{0} was released {1}".format(book.title, book.release_date))
