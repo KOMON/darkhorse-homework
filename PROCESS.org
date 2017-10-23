@@ -1,0 +1,423 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org.css"/>
+
+* Introduction
+  This is where I'm going to document the process I went through while completing
+  this assignment. This document is more "stream-of-conciousness" than what one
+  might normally think of as "documentation", but I'm a big believer in showing
+  your work. The idea is that if you look at my code and think "What did he mean by
+  this?", you don't have too look much farther than here.
+
+* First Steps
+  The first step was to put this in a directory under version control. One could argue
+  about the necessity of this step for a simple assignment, but why lose history
+  when you don't have to?
+  
+  #+BEGIN_SRC sh
+    $ mkdir darkhorse-homework && cd darkhorse-homework
+    $ cp ~/Downloads/sort-problem.py .
+    $ git init
+    $ git add * && git commit -m "Initial Commit"
+  #+END_SRC
+
+* Bug fixes
+  Now, let's run it just to see what we get:
+  
+  #+BEGIN_SRC sh
+  $ python sort-problem.py
+      File "sort-problem.py", line 20
+        i++
+          ^
+    SyntaxError: invalid syntax
+  #+END_SRC
+
+  Alright, something we can fix right off the bat, Python doesn't have this sort
+  of increment operator, so let's change those ~i++~ to ~i += 1~.
+  
+  #+BEGIN_SRC sh
+  $ python sort-problem.py
+      Traceback (most recent call last):
+        File "sort-problem.py", line 18, in <module>
+          print("2 Sisters was at index {} before sorting".format(index))
+    NameError: name 'index' is not defined
+  #+END_SRC
+  Looking at the source: 
+
+  #+BEGIN_SRC python
+    i = 0
+    for unsorted_brand in parsed_brands:
+        if unsorted_brand['name'] == '2 Sisters':
+            print("2 Sisters was at index {} before sorting".format(index))
+            break
+        i += 1
+  #+END_SRC
+
+  
+  Looks like we're referencing ~index~ on line 18 when we should probably be
+  trying to print ~i~ here. However, we don't need to be doing the index book
+  keeping by ourselves, so we'll ~enumerate()~ this for loop, and we'll do the
+  same for the sorted loop since I see we have a similar issue there.
+
+  #+BEGIN_SRC python
+    for index, unsorted_brand in enumerate(parsed_brands):
+        if unsorted_brand['name'] == '2 Sisters':
+            print("2 Sisters was at index {} before sorting".format(index))
+            break
+  #+END_SRC
+
+  Let's try that out...
+  
+  #+BEGIN_SRC sh
+  $ python sort-problem.py
+    2 Sisters was at index 0 before sorting
+    2 Sisters was at index 2 after sorting
+  #+END_SRC
+  
+  Okay, now we've got it working at least.
+
+
+* File Clean-up
+  The next step for me was to move off that giant json blob to a different file.
+  Having it in with the code is a) distracting, b) annoying to try to scroll
+  through in Emacs since it's all on the same line, and c) mixing data with code.
+  
+  So, I've moved it off to a file called ~brands.json~, which means a function
+  to parse the brands in from a file, ~parse_brands~. 
+  
+  #+BEGIN_SRC python
+  def parse_brands(filename):
+      """Parses in a list of brands from a json file"""
+      with open(filename, 'r') as infile:
+          return json.loads(infile.read())
+  #+END_SRC
+
+  Next up, we've got some duplication going on in these pre- and post-sorting 
+  checks where we find the index of '2 Sisters'. Let's split this duplication off
+  to its own function, ~find_brand_by_name~. We can also abstract
+  finding the index and the message we print off to another function,
+  ~print_brand_position~.
+  
+  #+BEGIN_SRC python
+  def find_brand_by_name(brands, name):
+      """
+      Loops through a list of brands to find the index of the brand
+      whose name matches the name parameter
+      """
+      for index, brand in enumerate(brands):
+          if brand['name'] == name:
+              return index
+          
+  def print_brand_position(brands, name, when):
+      """Finds and prints the index of a brand in the list of brands by name"""
+      index = find_brand_by_name(brands, name)
+      print("{0} was at index {1} {2} sorting".format(name, index, when))
+
+  #+END_SRC
+  
+  I've also taken the opportunity to rename ~parsed_brands~ to just ~brands~. I
+  don't think doing so loses too much information, there aren't any other sources
+  of brands in this example.
+
+* Algorithm Cleanup
+  Okay, let's take a crack at the actual sorting part. I'm going to paste that part
+  here and figure out what's going on.
+  
+  #+BEGIN_SRC python
+  count = 0
+  while count < len(brands):
+      for index, brand in enumerate(brands):
+          if index < len(brands) - 1:
+              if brands[index]['uuid'] > brands[index+1]['uuid']:
+                  temp = brands[index+1]
+                  brands[index+1] = brands[index]
+                  brands[index] = temp
+          count += 1
+  #+END_SRC
+  
+  Bird's eye view, we're doing (or trying to do) an in-place bubble sort. Every
+  iteration of the while loop we iterate over the brands and swap brands in-place
+  based on their uuids. However, we have an indentation bug here. ~count~ is
+  incremented inside of the for loop, which means it will count up to
+  ~len(parsed_brands)~ during the first iteration of the while loop, terminating it
+  after only one iteration through the brands list. That first iteration is enough
+  to get 2 Sisters to the position we expect it to be, but it leaves these two
+  unsorted:
+
+  3 Story (uuid 288122ef4fab411692dbd14c39370056)
+
+  300 (uuid 190bd25802f54732a8907adb591d3094)
+  
+  In other words, so far it's only been working by accident. Again, it begs the
+  question, why are we doing this loop bookkeeping ourselves? We could fix up this
+  section by doing some clean ups:
+  
+  #+BEGIN_SRC python
+  unsorted = True
+  while unsorted:
+      for i in range(len(brands) - 1):
+          unsorted = False
+          if brands[i]['uuid'] > brands[i+1]['uuid']:
+              unsorted = True
+              brands[i+1], brands[i] = brands[i], brands[i+1]
+  #+END_SRC
+  
+  This gives us the more canonical version of bubble sort, while also getting
+  rid of that ~temp~ variable using tuple assignment.
+  
+  Now, we can wrap this up in a function and get on to the next step, but I
+  question why we're implementing our own sorting function. Python's ~list.sort~
+  would do the trick just as well - it's more flexible because it'll be less
+  work to start sorting by other properties and it's less code that we have to
+  maintain.
+  
+  #+BEGIN_SRC python
+  brands.sort(key=lambda brand: brand['uuid'])
+  #+END_SRC
+  
+  There, I think that's about as simple as we're going to get it. Let's move on to
+  the new code portion of the assignment.
+
+* New Code
+  The objective here is to return a list of all the individual books sorted by 
+  release date. A simple list comprehension and another call to ~list.sort~
+  should work pretty nicely here. We'll also write a little something to print
+  to console:
+  
+  #+BEGIN_SRC python
+  def get_books_from_brands(brands):
+      return [book for brand in brands
+              for series in brand['series']
+              for volume in series['volumes']
+              for book in volume['books']]
+
+  books = get_books_from_brands(brands)
+  books.sort(key=lambda b: b['release_date'])
+
+  for book in books:
+      print("{0} was released {1}".format(book['title'], book['release_date']))
+  #+END_SRC
+  
+  Let's test it out:
+  
+  #+BEGIN_SRC sh
+  $ python sort-problem.py
+  2 Sisters was at index 0 before sorting
+  2 Sisters was at index 2 after sorting
+
+  3 Story: The Secret History of the Giant Man was released 2012-04-04 00:00:00
+  3 Story: Secret Files of the Giant Man One-Shot was released 2012-04-18 00:00:00
+  300 was released 2012-05-16 00:00:00
+  47 Ronin #1 was released 2012-11-07 00:00:00
+  47 Ronin #2 was released 2013-01-02 00:00:00
+  365 Samurai and a Few Bowls of Rice was released 2013-01-16 00:00:00
+  47 Ronin #3 was released 2013-03-06 00:00:00
+  47 Ronin #4 was released 2013-05-01 00:00:00
+  47 Ronin #5 was released 2013-07-03 00:00:00
+  47 Ronin #1-#5 Bundle was released 2013-07-31 00:00:00
+  2 Sisters: A Super-Spy Graphic Novel was released 2015-09-30 00:00:00
+  #+END_SRC
+  
+  
+  Pefect!
+
+* Step back and smell the code
+  I believe this is as simple as the code is going to get at this point.
+  I'll actually put the whole file (less assignment context strings) here in its
+  entirety:
+  
+  #+BEGIN_SRC python
+  import json
+
+  def parse_brands(filename):
+      """Parses in a list of brands from a json file"""
+      with open(filename, 'r') as infile:
+          return json.loads(infile.read())
+
+  def find_brand_by_name(brands, name):
+      """
+      Loops through a list of brands to find the index of the brand
+      whose name matches the name parameter
+      """
+      for index, brand in enumerate(brands):
+          if brand['name'] == name:
+              return index
+          
+  def print_brand_position(brands, name, when):
+      """Finds and prints the index of a brand in the list of brands by name"""
+      index = find_brand_by_name(brands, name)
+      print("{0} was at index {1} {2} sorting".format(name, index, when))
+
+  def get_books_from_brands(brands):
+        return [book for brand in brands
+                for series in brand['series']
+                for volume in series['volumes']
+                for book in volume['books']]
+
+  brands = parse_brands('brands.json')
+
+  print_brand_position(brands, name='2 Sisters', when='before')
+
+  brands.sort(key=lambda brand: brand['uuid'])
+
+  print_brand_position(brands, name='2 Sisters', when='after')
+
+  books = get_books_from_brands(brands)
+  books.sort(key=lambda b: b['release_date'])
+
+  for book in books:
+      print("{0} was released {1}".format(book['title'], book['release_date']))
+  #+END_SRC
+  
+  We've gone from having a massive blob of json right on top, with our own
+  broken bubble sort implementation and a couple of syntax errors for good
+  measure, to simple script that would be trivial for anybody to pick it up and
+  grasp it easily. If this /were/ a just simple script, I would probably leave
+  it here.
+
+
+* Not Leaving it There
+  Without the benefit of a greater application context for this script to fit into,
+  it would be difficult to say what would be needed to make this as maintainable as
+  possible, or where to draw the line for how much abstraction would be too much.
+  
+  For instance, we might begin writing some classes to model our data and replace
+  some of these top-level functions with methods. I put these classes in a separate
+  file - ~models.py~, and they're fairly bog-standard classes. I opted to use a 
+  ~**kwargs~ constructor along with a dictionary in the constructor to provide sane
+  defaults. I also implemented some ~@staticmethod~ methods that take a ~json_map~
+  and returns a new instance. This lets us be a little more flexible if the JSON
+  schema changes, and it makes writing our specialized decoder class, ~BrandDecoder~,
+  a little more clean, as you can see below.
+  
+  #+BEGIN_SRC python
+  class Brand:    
+      def __init__(self, **kwargs):
+          defaults = {
+              'is_featured': False,
+              'name': '',
+              'badge_image_url': '',
+              'sort_key': '',
+              'series': [],
+              'cover_image': '',
+              'etag': '',
+              'uuid': ''
+          }
+          for prop, default in defaults.items():
+              setattr(self, prop, kwargs.get(prop, default))
+
+      # <snip>
+      @staticmethod
+      def decode(json_map):
+          return Brand(**json_map)
+
+  class BrandDecoder(json.JSONDecoder):
+      def __init__(self, *args, **kwargs):
+          json.JSONDecoder.__init__(self, object_hook=self.object_hook,
+                                    ,*args, **kwargs)
+
+      def object_hook(self, obj):
+          if 'series' in obj:
+              return Brand.decode(obj)
+          elif 'volumes' in obj:
+              return Series.decode(obj)
+          elif 'books' in obj:
+              return Volume.decode(obj)
+          elif 'book_uuid' in obj:
+              return Book.decode(obj)
+          else:
+              return obj
+  #+END_SRC
+  
+  This is going to let us parse our JSON into a list of ~Brand~ and similar with
+  minimal fuss, in fact all we have to do is rewrite our ~parse_brands~ function
+  like so:
+  
+  #+BEGIN_SRC python
+  import json
+
+  from models import BrandDecoder
+
+  def parse_brands(filename):
+      """Parses in a list of brands from a json file"""
+      with open(filename, 'r') as infile:
+          return json.loads(infile.read(), cls=BrandDecoder)
+  #+END_SRC
+  
+  Just import the decoder and pass it in as a kwarg to ~json.loads~. We can also
+  drop the ~get_books_from_brands~ function now, we'll just add a few ~@property~
+  methods to the ~Brand~ and ~Series~ classes:
+  
+  #+BEGIN_SRC python
+  class Brand:
+      def __init__(self, **kwargs):
+          # <snip>
+
+      @property
+      def volumes(self):
+          return [volume for series in self.series for volume in series.volumes]
+
+      @property
+      def books:
+          return [book for series in self.series for book in series.books]
+
+  class Series:
+      def __init__(self, **kwargs):
+          # <snip>
+
+      @property
+      def books:
+          return [book for volume in self.volumes for book in volume.books]
+  #+END_SRC
+  
+  And now
+  #+BEGIN_SRC python
+  books = get_books_from_brands(brands)
+  #+END_SRC
+  
+  becomes
+  #+BEGIN_SRC python
+  books = [book for brand in brands for book in brand.books]
+  #+END_SRC
+
+* Reflection
+  Is this necessarily better? We could keep the ~get_books_from_brands~ function
+  and just rewrite the inner list comprehension to be shorter. I could go either
+  way on this one. On the one hand, naming things explicitly is good, and it would
+  be nice to not have to rewrite the comprehension every time. On the other hand,
+  if we wrote a function for every one-liner comprehension we'd soon be littered 
+  with many functions that do similar things and differ only slightly. 
+  
+  In a similar way, we could replace ~find_brand_by_name~ in ~print_brand_position~
+  with a generator expression and a call to ~next()~
+  
+  #+BEGIN_SRC python
+  def print_brand_position(brands, name, when):
+      #index = find_brand_by_name(brands, name)
+      index = next(i for i, brands in enumerate(brands) if brand.name == name)
+      print("{0} was at index {1} {2} sorting".format(name, index, when))
+  #+END_SRC
+  
+  I think this example falls on the other side of the line, here the naming of
+  ~find_brand_by_name~ is more useful than looking at this newer line. While
+  compact, every time you come back to this function after a while you'll need to
+  re-parse this expression, whereas naming it with a function allows you to grok
+  what's happening just a little faster. In fact, by rewriting ~find_brand_by_name~
+  using this line instead of the for loop it was using before allows us to rewrite
+  the docstring to be a blow-by-blow English version of the line:
+  
+  #+BEGIN_SRC python
+    def find_brand_by_name(brands, name):
+        """
+        Returns the index of the first brand in a list of brands
+        whose name matches name
+        """
+        return next(i for i, brands in enumerate(brands) if brand.name == name)
+  #+END_SRC
+
+* Conclusion
+  Is there more we could do here? Sure, there's always something you could be doing.
+  Writing unit tests, implementing better error handling, writing more detailed
+  documentation, the list goes on. For something as small as this script however, I
+  think we've taken it as far as could be considered practical.
+  
+  Hopefully I did a decent job of guiding you through my thought process, I hope you
+  enjoyed the journey with me, and I hope to be seeing you in person!

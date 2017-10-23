@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>PROCESS</title>
+<!-- 2017-10-23 Mon 02:30 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">PROCESS</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. First Steps</a></li>
+<li><a href="#sec-3">3. Bug fixes</a></li>
+<li><a href="#sec-4">4. File Clean-up</a></li>
+<li><a href="#sec-5">5. Algorithm Cleanup</a></li>
+<li><a href="#sec-6">6. New Code</a></li>
+<li><a href="#sec-7">7. Step back and smell the code</a></li>
+<li><a href="#sec-8">8. Not Leaving it There</a></li>
+<li><a href="#sec-9">9. Reflection</a></li>
+<li><a href="#sec-10">10. Conclusion</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This is where I'm going to document the process I went through while completing
+this assignment. This document is more "stream-of-conciousness" than what one
+might normally think of as "documentation", but I'm a big believer in showing
+your work. The idea is that if you look at my code and think "What did he mean by
+this?", you don't have too look much farther than here.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> First Steps</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The first step was to put this in a directory under version control. One could argue
+about the necessity of this step for a simple assignment, but why lose history
+when you don't have to?
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ mkdir darkhorse-homework &amp;&amp; <span class="org-builtin">cd</span> darkhorse-homework
+$ cp ~/Downloads/sort-problem.py .
+$ git init
+$ git add * &amp;&amp; git commit -m <span class="org-string">"Initial Commit"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Bug fixes</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Now, let's run it just to see what we get:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ python sort-problem.py
+    File <span class="org-string">"sort-problem.py"</span>, line 20
+      i++
+        ^
+  SyntaxError: invalid syntax
+</pre>
+</div>
+
+<p>
+Alright, something we can fix right off the bat, Python doesn't have this sort
+of increment operator, so let's change those <code>i++</code> to <code>i += 1</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ python sort-problem.py
+    Traceback (most recent call last):
+      File <span class="org-string">"sort-problem.py"</span>, line 18,<span class="org-keyword"> in</span> &lt;module&gt;
+        print(<span class="org-string">"2 Sisters was at index {} before sorting"</span>.format(index))
+  NameError: name <span class="org-string">'index'</span> is not defined
+</pre>
+</div>
+<p>
+Looking at the source: 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">i</span> = 0
+<span class="org-keyword">for</span> unsorted_brand <span class="org-keyword">in</span> parsed_brands:
+    <span class="org-keyword">if</span> unsorted_brand[<span class="org-string">'name'</span>] == <span class="org-string">'2 Sisters'</span>:
+        <span class="org-keyword">print</span>(<span class="org-string">"2 Sisters was at index {} before sorting"</span>.<span class="org-builtin">format</span>(index))
+        <span class="org-keyword">break</span>
+    <span class="org-variable-name">i</span> += 1
+</pre>
+</div>
+
+
+<p>
+Looks like we're referencing <code>index</code> on line 18 when we should probably be
+trying to print <code>i</code> here. However, we don't need to be doing the index book
+keeping by ourselves, so we'll <code>enumerate()</code> this for loop, and we'll do the
+same for the sorted loop since I see we have a similar issue there.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">for</span> index, unsorted_brand <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span>(parsed_brands):
+    <span class="org-keyword">if</span> unsorted_brand[<span class="org-string">'name'</span>] == <span class="org-string">'2 Sisters'</span>:
+        <span class="org-keyword">print</span>(<span class="org-string">"2 Sisters was at index {} before sorting"</span>.<span class="org-builtin">format</span>(index))
+        <span class="org-keyword">break</span>
+</pre>
+</div>
+
+<p>
+Let's try that out&#x2026;
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ python sort-problem.py
+  2 Sisters was at index 0 before sorting
+  2 Sisters was at index 2 after sorting
+</pre>
+</div>
+
+<p>
+Okay, now we've got it working at least.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> File Clean-up</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+The next step for me was to move off that giant json blob to a different file.
+Having it in with the code is a) distracting, b) annoying to try to scroll
+through in Emacs since it's all on the same line, and c) mixing data with code.
+</p>
+
+<p>
+So, I've moved it off to a file called <code>brands.json</code>, which means a function
+to parse the brands in from a file, <code>parse_brands</code>. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">parse_brands</span>(filename):
+    <span class="org-doc">"""Parses in a list of brands from a json file"""</span>
+    <span class="org-keyword">with</span> <span class="org-builtin">open</span>(filename, <span class="org-string">'r'</span>) <span class="org-keyword">as</span> infile:
+        <span class="org-keyword">return</span> json.loads(infile.read())
+</pre>
+</div>
+
+<p>
+Next up, we've got some duplication going on in these pre- and post-sorting 
+checks where we find the index of '2 Sisters'. Let's split this duplication off
+to its own function, <code>find_brand_by_name</code>. We can also abstract
+finding the index and the message we print off to another function,
+<code>print_brand_position</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">find_brand_by_name</span>(brands, name):
+    <span class="org-doc">"""</span>
+<span class="org-doc">    Loops through a list of brands to find the index of the brand</span>
+<span class="org-doc">    whose name matches the name parameter</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">for</span> index, brand <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span>(brands):
+        <span class="org-keyword">if</span> brand[<span class="org-string">'name'</span>] == name:
+            <span class="org-keyword">return</span> index
+
+<span class="org-keyword">def</span> <span class="org-function-name">print_brand_position</span>(brands, name, when):
+    <span class="org-doc">"""Finds and prints the index of a brand in the list of brands by name"""</span>
+    <span class="org-variable-name">index</span> = find_brand_by_name(brands, name)
+    <span class="org-keyword">print</span>(<span class="org-string">"{0} was at index {1} {2} sorting"</span>.<span class="org-builtin">format</span>(name, index, when))
+</pre>
+</div>
+
+<p>
+I've also taken the opportunity to rename <code>parsed_brands</code> to just <code>brands</code>. I
+don't think doing so loses too much information, there aren't any other sources
+of brands in this example.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Algorithm Cleanup</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Okay, let's take a crack at the actual sorting part. I'm going to paste that part
+here and figure out what's going on.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">count</span> = 0
+<span class="org-keyword">while</span> count &lt; <span class="org-builtin">len</span>(brands):
+    <span class="org-keyword">for</span> index, brand <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span>(brands):
+        <span class="org-keyword">if</span> index &lt; <span class="org-builtin">len</span>(brands) - 1:
+            <span class="org-keyword">if</span> brands[index][<span class="org-string">'uuid'</span>] &gt; brands[index+1][<span class="org-string">'uuid'</span>]:
+                <span class="org-variable-name">temp</span> = brands[index+1]
+                <span class="org-variable-name">brands</span>[index+1] = brands[index]
+                <span class="org-variable-name">brands</span>[index] = temp
+        <span class="org-variable-name">count</span> += 1
+</pre>
+</div>
+
+<p>
+Bird's eye view, we're doing (or trying to do) an in-place bubble sort. Every
+iteration of the while loop we iterate over the brands and swap brands in-place
+based on their uuids. However, we have an indentation bug here. <code>count</code> is
+incremented inside of the for loop, which means it will count up to
+<code>len(parsed_brands)</code> during the first iteration of the while loop, terminating it
+after only one iteration through the brands list. That first iteration is enough
+to get 2 Sisters to the position we expect it to be, but it leaves these two
+unsorted:
+</p>
+
+<p>
+3 Story (uuid 288122ef4fab411692dbd14c39370056)
+</p>
+
+<p>
+300 (uuid 190bd25802f54732a8907adb591d3094)
+</p>
+
+<p>
+In other words, so far it's only been working by accident. Again, it begs the
+question, why are we doing this loop bookkeeping ourselves? We could fix up this
+section by doing some clean ups:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">unsorted</span> = <span class="org-constant">True</span>
+<span class="org-keyword">while</span> unsorted:
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(<span class="org-builtin">len</span>(brands) - 1):
+        <span class="org-variable-name">unsorted</span> = <span class="org-constant">False</span>
+        <span class="org-keyword">if</span> brands[i][<span class="org-string">'uuid'</span>] &gt; brands[i+1][<span class="org-string">'uuid'</span>]:
+            <span class="org-variable-name">unsorted</span> = <span class="org-constant">True</span>
+            brands[i+1], <span class="org-variable-name">brands</span>[i] = brands[i], brands[i+1]
+</pre>
+</div>
+
+<p>
+This gives us the more canonical version of bubble sort, while also getting
+rid of that <code>temp</code> variable using tuple assignment.
+</p>
+
+<p>
+Now, we can wrap this up in a function and get on to the next step, but I
+question why we're implementing our own sorting function. Python's <code>list.sort</code>
+would do the trick just as well - it's more flexible because it'll be less
+work to start sorting by other properties and it's less code that we have to
+maintain.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">brands.sort(key=<span class="org-keyword">lambda</span> brand: brand[<span class="org-string">'uuid'</span>])
+</pre>
+</div>
+
+<p>
+There, I think that's about as simple as we're going to get it. Let's move on to
+the new code portion of the assignment.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> New Code</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+The objective here is to return a list of all the individual books sorted by 
+release date. A simple list comprehension and another call to <code>list.sort</code>
+should work pretty nicely here. We'll also write a little something to print
+to console:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">get_books_from_brands</span>(brands):
+    <span class="org-keyword">return</span> [book <span class="org-keyword">for</span> brand <span class="org-keyword">in</span> brands
+            <span class="org-keyword">for</span> series <span class="org-keyword">in</span> brand[<span class="org-string">'series'</span>]
+            <span class="org-keyword">for</span> volume <span class="org-keyword">in</span> series[<span class="org-string">'volumes'</span>]
+            <span class="org-keyword">for</span> book <span class="org-keyword">in</span> volume[<span class="org-string">'books'</span>]]
+
+<span class="org-variable-name">books</span> = get_books_from_brands(brands)
+books.sort(key=<span class="org-keyword">lambda</span> b: b[<span class="org-string">'release_date'</span>])
+
+<span class="org-keyword">for</span> book <span class="org-keyword">in</span> books:
+    <span class="org-keyword">print</span>(<span class="org-string">"{0} was released {1}"</span>.<span class="org-builtin">format</span>(book[<span class="org-string">'title'</span>], book[<span class="org-string">'release_date'</span>]))
+</pre>
+</div>
+
+<p>
+Let's test it out:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ python sort-problem.py
+2 Sisters was at index 0 before sorting
+2 Sisters was at index 2 after sorting
+
+3 Story: The Secret History of the Giant Man was released 2012-04-04 00:00:00
+3 Story: Secret Files of the Giant Man One-Shot was released 2012-04-18 00:00:00
+300 was released 2012-05-16 00:00:00
+47 Ronin <span class="org-comment-delimiter">#</span><span class="org-comment">1 was released 2012-11-07 00:00:00</span>
+47 Ronin <span class="org-comment-delimiter">#</span><span class="org-comment">2 was released 2013-01-02 00:00:00</span>
+365 Samurai and a Few Bowls of Rice was released 2013-01-16 00:00:00
+47 Ronin <span class="org-comment-delimiter">#</span><span class="org-comment">3 was released 2013-03-06 00:00:00</span>
+47 Ronin <span class="org-comment-delimiter">#</span><span class="org-comment">4 was released 2013-05-01 00:00:00</span>
+47 Ronin <span class="org-comment-delimiter">#</span><span class="org-comment">5 was released 2013-07-03 00:00:00</span>
+47 Ronin <span class="org-comment-delimiter">#</span><span class="org-comment">1-#5 Bundle was released 2013-07-31 00:00:00</span>
+2 Sisters: A Super-Spy Graphic Novel was released 2015-09-30 00:00:00
+</pre>
+</div>
+
+
+<p>
+Pefect!
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Step back and smell the code</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+I believe this is as simple as the code is going to get at this point.
+I'll actually put the whole file (less assignment context strings) here in its
+entirety:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> json
+
+<span class="org-keyword">def</span> <span class="org-function-name">parse_brands</span>(filename):
+    <span class="org-doc">"""Parses in a list of brands from a json file"""</span>
+    <span class="org-keyword">with</span> <span class="org-builtin">open</span>(filename, <span class="org-string">'r'</span>) <span class="org-keyword">as</span> infile:
+        <span class="org-keyword">return</span> json.loads(infile.read())
+
+<span class="org-keyword">def</span> <span class="org-function-name">find_brand_by_name</span>(brands, name):
+    <span class="org-doc">"""</span>
+<span class="org-doc">    Loops through a list of brands to find the index of the brand</span>
+<span class="org-doc">    whose name matches the name parameter</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">for</span> index, brand <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span>(brands):
+        <span class="org-keyword">if</span> brand[<span class="org-string">'name'</span>] == name:
+            <span class="org-keyword">return</span> index
+
+<span class="org-keyword">def</span> <span class="org-function-name">print_brand_position</span>(brands, name, when):
+    <span class="org-doc">"""Finds and prints the index of a brand in the list of brands by name"""</span>
+    <span class="org-variable-name">index</span> = find_brand_by_name(brands, name)
+    <span class="org-keyword">print</span>(<span class="org-string">"{0} was at index {1} {2} sorting"</span>.<span class="org-builtin">format</span>(name, index, when))
+
+<span class="org-keyword">def</span> <span class="org-function-name">get_books_from_brands</span>(brands):
+      <span class="org-keyword">return</span> [book <span class="org-keyword">for</span> brand <span class="org-keyword">in</span> brands
+              <span class="org-keyword">for</span> series <span class="org-keyword">in</span> brand[<span class="org-string">'series'</span>]
+              <span class="org-keyword">for</span> volume <span class="org-keyword">in</span> series[<span class="org-string">'volumes'</span>]
+              <span class="org-keyword">for</span> book <span class="org-keyword">in</span> volume[<span class="org-string">'books'</span>]]
+
+<span class="org-variable-name">brands</span> = parse_brands(<span class="org-string">'brands.json'</span>)
+
+print_brand_position(brands, name=<span class="org-string">'2 Sisters'</span>, when=<span class="org-string">'before'</span>)
+
+brands.sort(key=<span class="org-keyword">lambda</span> brand: brand[<span class="org-string">'uuid'</span>])
+
+print_brand_position(brands, name=<span class="org-string">'2 Sisters'</span>, when=<span class="org-string">'after'</span>)
+
+<span class="org-variable-name">books</span> = get_books_from_brands(brands)
+books.sort(key=<span class="org-keyword">lambda</span> b: b[<span class="org-string">'release_date'</span>])
+
+<span class="org-keyword">for</span> book <span class="org-keyword">in</span> books:
+    <span class="org-keyword">print</span>(<span class="org-string">"{0} was released {1}"</span>.<span class="org-builtin">format</span>(book[<span class="org-string">'title'</span>], book[<span class="org-string">'release_date'</span>]))
+</pre>
+</div>
+
+<p>
+We've gone from having a massive blob of json right on top, with our own
+broken bubble sort implementation and a couple of syntax errors for good
+measure, to simple script that would be trivial for anybody to pick it up and
+grasp it easily. If this <i>were</i> a just simple script, I would probably leave
+it here.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Not Leaving it There</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Without the benefit of a greater application context for this script to fit into,
+it would be difficult to say what would be needed to make this as maintainable as
+possible, or where to draw the line for how much abstraction would be too much.
+</p>
+
+<p>
+For instance, we might begin writing some classes to model our data and replace
+some of these top-level functions with methods. I put these classes in a separate
+file - <code>models.py</code>, and they're fairly bog-standard classes. I opted to use a 
+<code>**kwargs</code> constructor along with a dictionary in the constructor to provide sane
+defaults. I also implemented some <code>@staticmethod</code> methods that take a <code>json_map</code>
+and returns a new instance. This lets us be a little more flexible if the JSON
+schema changes, and it makes writing our specialized decoder class, <code>BrandDecoder</code>,
+a little more clean, as you can see below.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Brand</span>:    
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, **kwargs):
+        <span class="org-variable-name">defaults</span> = {
+            <span class="org-string">'is_featured'</span>: <span class="org-constant">False</span>,
+            <span class="org-string">'name'</span>: <span class="org-string">''</span>,
+            <span class="org-string">'badge_image_url'</span>: <span class="org-string">''</span>,
+            <span class="org-string">'sort_key'</span>: <span class="org-string">''</span>,
+            <span class="org-string">'series'</span>: [],
+            <span class="org-string">'cover_image'</span>: <span class="org-string">''</span>,
+            <span class="org-string">'etag'</span>: <span class="org-string">''</span>,
+            <span class="org-string">'uuid'</span>: <span class="org-string">''</span>
+        }
+        <span class="org-keyword">for</span> prop, default <span class="org-keyword">in</span> defaults.items():
+            <span class="org-builtin">setattr</span>(<span class="org-keyword">self</span>, prop, kwargs.get(prop, default))
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&lt;snip&gt;</span>
+    <span class="org-type">@staticmethod</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">decode</span>(json_map):
+        <span class="org-keyword">return</span> Brand(**json_map)
+
+<span class="org-keyword">class</span> <span class="org-type">BrandDecoder</span>(json.JSONDecoder):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, *args, **kwargs):
+        json.JSONDecoder.__init__(<span class="org-keyword">self</span>, object_hook=<span class="org-keyword">self</span>.object_hook,
+                                  *args, **kwargs)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">object_hook</span>(<span class="org-keyword">self</span>, obj):
+        <span class="org-keyword">if</span> <span class="org-string">'series'</span> <span class="org-keyword">in</span> obj:
+            <span class="org-keyword">return</span> Brand.decode(obj)
+        <span class="org-keyword">elif</span> <span class="org-string">'volumes'</span> <span class="org-keyword">in</span> obj:
+            <span class="org-keyword">return</span> Series.decode(obj)
+        <span class="org-keyword">elif</span> <span class="org-string">'books'</span> <span class="org-keyword">in</span> obj:
+            <span class="org-keyword">return</span> Volume.decode(obj)
+        <span class="org-keyword">elif</span> <span class="org-string">'book_uuid'</span> <span class="org-keyword">in</span> obj:
+            <span class="org-keyword">return</span> Book.decode(obj)
+        <span class="org-keyword">else</span>:
+            <span class="org-keyword">return</span> obj
+</pre>
+</div>
+
+<p>
+This is going to let us parse our JSON into a list of <code>Brand</code> and similar with
+minimal fuss, in fact all we have to do is rewrite our <code>parse_brands</code> function
+like so:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> json
+
+<span class="org-keyword">from</span> models <span class="org-keyword">import</span> BrandDecoder
+
+<span class="org-keyword">def</span> <span class="org-function-name">parse_brands</span>(filename):
+    <span class="org-doc">"""Parses in a list of brands from a json file"""</span>
+    <span class="org-keyword">with</span> <span class="org-builtin">open</span>(filename, <span class="org-string">'r'</span>) <span class="org-keyword">as</span> infile:
+        <span class="org-keyword">return</span> json.loads(infile.read(), cls=BrandDecoder)
+</pre>
+</div>
+
+<p>
+Just import the decoder and pass it in as a kwarg to <code>json.loads</code>. We can also
+drop the <code>get_books_from_brands</code> function now, we'll just add a few <code>@property</code>
+methods to the <code>Brand</code> and <code>Series</code> classes:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Brand</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, **kwargs):
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&lt;snip&gt;</span>
+
+    <span class="org-type">@property</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">volumes</span>(<span class="org-keyword">self</span>):
+        <span class="org-keyword">return</span> [volume <span class="org-keyword">for</span> series <span class="org-keyword">in</span> <span class="org-keyword">self</span>.series <span class="org-keyword">for</span> volume <span class="org-keyword">in</span> series.volumes]
+
+    <span class="org-type">@property</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">books</span>:
+        <span class="org-keyword">return</span> [book <span class="org-keyword">for</span> series <span class="org-keyword">in</span> <span class="org-keyword">self</span>.series <span class="org-keyword">for</span> book <span class="org-keyword">in</span> series.books]
+
+<span class="org-keyword">class</span> <span class="org-type">Series</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, **kwargs):
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&lt;snip&gt;</span>
+
+    <span class="org-type">@property</span>
+    <span class="org-keyword">def</span> <span class="org-function-name">books</span>:
+        <span class="org-keyword">return</span> [book <span class="org-keyword">for</span> volume <span class="org-keyword">in</span> <span class="org-keyword">self</span>.volumes <span class="org-keyword">for</span> book <span class="org-keyword">in</span> volume.books]
+</pre>
+</div>
+
+<p>
+And now
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">books</span> = get_books_from_brands(brands)
+</pre>
+</div>
+
+<p>
+becomes
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">books</span> = [book <span class="org-keyword">for</span> brand <span class="org-keyword">in</span> brands <span class="org-keyword">for</span> book <span class="org-keyword">in</span> brand.books]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Reflection</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Is this necessarily better? We could keep the <code>get_books_from_brands</code> function
+and just rewrite the inner list comprehension to be shorter. I could go either
+way on this one. On the one hand, naming things explicitly is good, and it would
+be nice to not have to rewrite the comprehension every time. On the other hand,
+if we wrote a function for every one-liner comprehension we'd soon be littered 
+with many functions that do similar things and differ only slightly. 
+</p>
+
+<p>
+In a similar way, we could replace <code>find_brand_by_name</code> in <code>print_brand_position</code>
+with a generator expression and a call to <code>next()</code>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">print_brand_position</span>(brands, name, when):
+    <span class="org-comment-delimiter">#</span><span class="org-comment">index = find_brand_by_name(brands, name)</span>
+    <span class="org-variable-name">index</span> = <span class="org-builtin">next</span>(i <span class="org-keyword">for</span> i, brands <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span>(brands) <span class="org-keyword">if</span> brand.name == name)
+    <span class="org-keyword">print</span>(<span class="org-string">"{0} was at index {1} {2} sorting"</span>.<span class="org-builtin">format</span>(name, index, when))
+</pre>
+</div>
+
+<p>
+I think this example falls on the other side of the line, here the naming of
+<code>find_brand_by_name</code> is more useful than looking at this newer line. While
+compact, every time you come back to this function after a while you'll need to
+re-parse this expression, whereas naming it with a function allows you to grok
+what's happening just a little faster. In fact, by rewriting <code>find_brand_by_name</code>
+using this line instead of the for loop it was using before allows us to rewrite
+the docstring to be a blow-by-blow English version of the line:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">find_brand_by_name</span>(brands, name):
+    <span class="org-doc">"""</span>
+<span class="org-doc">    Returns the index of the first brand in a list of brands</span>
+<span class="org-doc">    whose name matches name</span>
+<span class="org-doc">    """</span>
+    <span class="org-keyword">return</span> <span class="org-builtin">next</span>(i <span class="org-keyword">for</span> i, brands <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span>(brands) <span class="org-keyword">if</span> brand.name == name)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Conclusion</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+Is there more we could do here? Sure, there's always something you could be doing.
+Writing unit tests, implementing better error handling, writing more detailed
+documentation, the list goes on. For something as small as this script however, I
+think we've taken it as far as could be considered practical.
+</p>
+
+<p>
+Hopefully I did a decent job of guiding you through my thought process, I hope you
+enjoyed the journey with me, and I hope to be seeing you in person!
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-10-23 Mon 02:30</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
