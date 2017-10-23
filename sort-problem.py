@@ -14,12 +14,10 @@ def parse_brands(filename):
 
 def find_brand_by_name(brands, name):
     """
-    Loops through a list of brands to find the index of the brand
-    whose name matches the name parameter
+    Returns the index of the first brand in a list of brands whose name
+    matches name
     """
-    for index, brand in enumerate(brands):
-        if brand.name == name:
-            return index
+    return next(i for i, brands in enumerate(brands) if brand.name == name)
         
 def print_brand_position(brands, name, when):
     """Finds and prints the index of a brand in the list of brands by name"""
